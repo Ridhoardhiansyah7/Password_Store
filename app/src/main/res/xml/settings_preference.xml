@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Security">
+
+        <SwitchPreference
+            app:key="lock"
+            app:title="Kunci Aplikasi"
+            app:enabled="false"
+            app:summary="@string/enter_device_password_preference_not_enable"
+            app:icon="@drawable/baseline_lock_24"/>
+
+
+        <SwitchPreference
+            app:key="encrypt"
+            app:title="@string/encrypt_preference_title"
+            app:enabled="true"
+            app:summary="@string/encrypt_preference"
+            app:icon="@drawable/baseline_security_24"/>
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Tools">
+
+        <Preference
+            app:key="backup"
+            app:title="Backup data"
+            app:enabled="false"
+            app:summary="@string/backup_restore_preference_not_enable"
+            app:icon="@drawable/baseline_backup_24"/>
+
+        <Preference
+            app:key="restore"
+            app:title="Restore data"
+            app:enabled="false"
+            app:summary="@string/backup_restore_preference_not_enable"
+            app:icon="@drawable/baseline_restore_page_24"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="About">
+
+        <Preference
+            app:key="about"
+            app:title="About App"
+            app:summary="App version : 1.0"
+            app:icon="@drawable/baseline_info_24"/>
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
