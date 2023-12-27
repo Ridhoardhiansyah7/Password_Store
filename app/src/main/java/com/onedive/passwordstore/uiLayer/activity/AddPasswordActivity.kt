@@ -18,7 +18,7 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 
 open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
 
-    var color: Int = 0xFF006785.toInt()
+    var color: Int = 0xFF006785.toInt() // default color if nothing is selected
 
     private val viewModel:PasswordViewModel<PasswordRoomEntity> by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
@@ -37,7 +37,6 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
 
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.add_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -45,12 +44,11 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_add) {
-            saveData(null) // menyimpan data
+            saveData(null)  // null because we use @PrimaryKey(autoGenerate = true) in the room db
         }
         return super.onOptionsItemSelected(item)
     }
 
-    // menampilkan dialog color picker
     private fun showColorPickerDialog(){
 
         ColorPickerDialog.Builder(this)
@@ -74,7 +72,7 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
 
     }
 
-    //menyimpan data ke database
+
     protected open fun saveData(id:Long?) {
 
         val title = binding.edtTitle.text.toString().trim()
@@ -89,7 +87,7 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
             if (password != rePassword) {
                 Toast.makeText(this,getString(R.string.input_pass_not_equals),Toast.LENGTH_LONG).show()
             } else {
-                viewModel.upsert(PasswordRoomEntity(title,username,password,description,color,tags, getCurrentLocaleTime(),id))
+                viewModel.upsert(PasswordRoomEntity(title,username,password,description,color,tags,getCurrentLocaleTime(),id))
                 Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show()
                 finish()
             }

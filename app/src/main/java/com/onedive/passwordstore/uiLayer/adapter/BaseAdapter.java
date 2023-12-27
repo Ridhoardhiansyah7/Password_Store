@@ -7,6 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
+/**
+ * This class is the base class for the recyclerview adapter in this project, created to reduce boilerplate code when initiating the adapter
+ * @param <B> viewBinding to use
+ */
 public abstract class BaseAdapter<B extends ViewBinding > extends RecyclerView.Adapter<BaseAdapter.BaseHolder<B>> {
 
     private B binding;

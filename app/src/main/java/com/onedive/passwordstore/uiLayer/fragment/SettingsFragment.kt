@@ -21,6 +21,9 @@ import com.onedive.passwordstore.utils.showDialog
 import com.onedive.passwordstore.viewmodel.BackupRestoreDataViewModel
 import com.onedive.passwordstore.viewmodel.factory.BackupRestoreDataViewModelFactory
 
+/**
+ * This class is the class that manages the setting preferences for this project
+ */
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private lateinit var fragmentActivity: SettingsActivity

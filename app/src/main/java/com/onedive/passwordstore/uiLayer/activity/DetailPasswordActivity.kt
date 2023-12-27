@@ -54,29 +54,29 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
     }
 
     override fun deviceSecurityIsAvailable() {
-        if (intent.hasExtra(EXTRA_DETAIL_KEY)){
-            id = intent.getStringExtra(EXTRA_DETAIL_KEY)?.toLong() ?: -1
-            showData()
-        }
+        showData()
     }
 
     override fun deviceSecurityIsNotAvailable() {
-        if (intent.hasExtra(EXTRA_DETAIL_KEY)){
-            id = intent.getStringExtra(EXTRA_DETAIL_KEY)?.toLong() ?: -1
-            showData()
-        }
+        showData()
     }
 
 
 
     private fun showData(){
-        viewModel.getDetailedItemById(id).observe(this){
-            binding.edtTitle.setText(it.title)
-            binding.edtUsername.setText(it.username)
-            binding.edtPassword.setText(it.password)
-            binding.edtDesc.setText(it.desc)
-            binding.edtTags.setText(it.tags)
-            binding.edtDate.setText(it.date)
+
+        if (intent.hasExtra(EXTRA_DETAIL_KEY)){
+
+            id = intent.getStringExtra(EXTRA_DETAIL_KEY)?.toLong() ?: -1
+            viewModel.getDetailedItemById(id).observe(this){
+                binding.edtTitle.setText(it.title)
+                binding.edtUsername.setText(it.username)
+                binding.edtPassword.setText(it.password)
+                binding.edtDesc.setText(it.desc)
+                binding.edtTags.setText(it.tags)
+                binding.edtDate.setText(it.date)
+            }
+
         }
     }
 }

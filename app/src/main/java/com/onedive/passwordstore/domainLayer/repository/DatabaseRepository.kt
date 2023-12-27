@@ -40,7 +40,7 @@ interface DatabaseRepository<T> {
     suspend fun upsert(entity: T)
 
     /**
-     * This function is used to: Delete data
+     * This function is used to: Delete data by id
      */
     suspend fun deleteById(id: Long)
 
