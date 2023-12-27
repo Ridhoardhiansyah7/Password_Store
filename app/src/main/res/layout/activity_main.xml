@@ -56,4 +56,8 @@
         tools:ignore="ContentDescription"
         android:id="@+id/fab_add"/>
 
+    <include
+        layout="@layout/lottie"
+        android:id="@+id/lottie_parent"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

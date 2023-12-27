@@ -34,7 +34,8 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.detail_menu,menu)
+        menuInflater.inflate(R.menu.edit_delete_menu,menu)
+        menu.findItem(R.id.action_delete).setVisible(false)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -46,9 +47,6 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
                 from = this,
                 to = EditPasswordActivity::class.java
             )
-        }else{
-            viewModel.deleteById(id)
-            finish()
         }
         return super.onOptionsItemSelected(item)
     }

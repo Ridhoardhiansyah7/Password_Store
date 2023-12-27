@@ -40,6 +40,17 @@
 
         <activity android:name=".uiLayer.activity.SettingsActivity"/>
 
+        <activity android:name=".uiLayer.activity.CrashActivity"
+            android:process=":error_activity"
+            android:label="Error"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="cat.ereza.customactivityoncrash.ERROR" />
+            </intent-filter>
+
+        </activity>
+
 
     </application>
 

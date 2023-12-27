@@ -10,6 +10,7 @@ import com.onedive.passwordstore.domainLayer.dataSource.room.entity.PasswordRoom
 class PasswordDataAdapter(
     private val list: List<PasswordRoomEntity>,
     private val onClick : (Int) -> Unit,
+    private val onLongClick : (Int) -> Unit,
     context: Context,
 ) : BaseAdapter<PasswordItemBinding>(context) {
 
@@ -30,6 +31,10 @@ class PasswordDataAdapter(
 
                 itemImage.setBackgroundColor(roundedColor)
                 holder.itemView.setOnClickListener { onClick(position) }
+                holder.itemView.setOnLongClickListener {
+                    onLongClick(position)
+                    true
+                }
             }
         }
     }

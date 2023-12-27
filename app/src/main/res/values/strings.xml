@@ -13,6 +13,7 @@
 
     <string name="edit_ignored">* changes made on this page will be ignored</string>
     <string name="input_encrypt">Enter the password that will be used for encryption</string>
+    <string name="no_data_saved">No data has been saved yet</string>
 
     <string name="save_menu">Save</string>
     <string name="edit_menu">Edit</string>
@@ -23,6 +24,8 @@
     <string name="add_password">Add Password</string>
     <string name="confirm_ok">Oke</string>
     <string name="confirm_close">Close</string>
+
+    <string name="select_option_here">Select Option here</string>
 
     <string name="input_pass_not_equals">Password and Confirm Password values are not the same!</string>
     <string name="input_cannot_empty">some forms cannot be blank!</string>

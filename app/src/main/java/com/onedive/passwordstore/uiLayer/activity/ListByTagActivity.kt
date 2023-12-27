@@ -40,6 +40,7 @@ class ListByTagActivity : BaseActivity<ActivityListByTagBinding>() {
         viewModel.getAllByTagName(tagName).observe(this){ list ->
 
             PasswordDataAdapter(
+                context = this,
                 list = list ,
                 onClick = {
                     toAnotherActivity(
@@ -49,7 +50,8 @@ class ListByTagActivity : BaseActivity<ActivityListByTagBinding>() {
                         to = DetailPasswordActivity::class.java
                     )
                },
-                context = this
+                onLongClick = {}
+
 
             ).also { binding.rvListByType.adapter = it }
         }

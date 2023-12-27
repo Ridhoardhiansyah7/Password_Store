@@ -12,7 +12,8 @@
     <string name="tag">Penanda</string>
 
     <string name="edit_ignored">* Perubahan yang terjadi disini akan diabaikan</string>
-    <string name="input_encrypt">Masukan katasandi yg akan digunakan untuk enkripsi data</string>
+    <string name="input_encrypt">Masukan katasandi yang akan digunakan untuk enkripsi data</string>
+    <string name="no_data_saved">Belum ada data yang disimpan</string>
 
     <string name="save_menu">Simpan</string>
     <string name="edit_menu">Sunting</string>
@@ -23,6 +24,8 @@
     <string name="add_password">Tambahkan Password</string>
     <string name="confirm_ok">Oke</string>
     <string name="confirm_close">Tutup</string>
+
+    <string name="select_option_here">Pilih opsi </string>
 
     <string name="input_pass_not_equals">Katasandi dan konfirmasi katasandi nilai nya tidak sama!</string>
     <string name="input_cannot_empty">Beberapa formulir tidak boleh kosong!</string>

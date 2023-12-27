@@ -14,7 +14,7 @@ public final class Const {
     //MainActivity -> ListByTagActivity
     public static final String EXTRA_LIST_BY_TAG = "ExtraTag";
 
-    //DetailPasswordActivity -> EditPasswordActivity
+    // MainActivity / DetailPasswordActivity  -> EditPasswordActivity
     public static final String EXTRA_EDIT = "ExtraEdit";
 
 
@@ -22,5 +22,7 @@ public final class Const {
     public static final String LOCK_APP_KEY_PREFERENCE = "lockPreference";
     public static final String ENCRYPT_KEY_PREFERENCE = "encryptPreference";
 
+    //No
+    public static final String DEVELOPER_CONTACT_NUMBER = "62895323021645";
 
 }

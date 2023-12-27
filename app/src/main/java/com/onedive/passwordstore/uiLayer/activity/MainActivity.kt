@@ -4,13 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.view.ActionMode
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.databinding.ActivityMainBinding
 import com.onedive.passwordstore.domainLayer.dataSource.room.entity.PasswordRoomEntity
 import com.onedive.passwordstore.domainLayer.repository.impl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.uiLayer.adapter.PasswordDataAdapter
 import com.onedive.passwordstore.uiLayer.adapter.PasswordDataTypeAdapter
+import com.onedive.passwordstore.utils.Const
 import com.onedive.passwordstore.utils.Const.EXTRA_DETAIL_KEY
 import com.onedive.passwordstore.utils.Const.EXTRA_LIST_BY_TAG
 import com.onedive.passwordstore.utils.toAnotherActivity
@@ -18,6 +21,9 @@ import com.onedive.passwordstore.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.viewmodel.factory.PasswordViewModelFactory
 
 class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
+
+    private var actionMode:ActionMode? = null
+    private var id:Long = 0
 
     private val viewModel: PasswordViewModel<PasswordRoomEntity> by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
@@ -61,6 +67,7 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         viewModel.getAll.observe(this) { list ->
 
             PasswordDataAdapter(
+                context = this,
                 list =  list ,
                 onClick = {
                     toAnotherActivity(
@@ -70,9 +77,23 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
                         to = DetailPasswordActivity::class.java
                     )
                 },
-                context = this
+                onLongClick = {
+                   if (actionMode == null){
+                       id = list[it].id!!
+                       actionMode = startSupportActionMode(actionCallback)
+                   }
+                }
 
-            ).also { binding.rvPassword.adapter = it }
+            ).also {
+                binding.rvPassword.adapter = it
+
+                if (it.itemCount == 0){
+                    binding.lottieParent.parent.visibility = View.VISIBLE
+                }else{
+                    binding.lottieParent.parent.visibility = View.GONE
+                }
+
+            }
         }
     }
 
@@ -95,5 +116,39 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         }
     }
 
+    private val actionCallback:ActionMode.Callback = object : ActionMode.Callback {
 
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            mode.menuInflater.inflate(R.menu.edit_delete_menu, menu)
+            mode.title = getString(R.string.select_option_here)
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            return when(item.itemId){
+
+                R.id.action_edit -> {
+                    toAnotherActivity(Const.EXTRA_EDIT,id.toString(),this@MainActivity,EditPasswordActivity::class.java)
+                    mode.finish()
+                    true
+                }
+
+                R.id.action_delete ->{
+                    viewModel.deleteById(id)
+                    mode.finish()
+                    true
+                }
+
+                else ->  false
+            }
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+            actionMode = null
+        }
+    }
 }

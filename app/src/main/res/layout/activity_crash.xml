@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:lottie_fileName="error_animation.json"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        android:layout_centerInParent="true"
+        android:id="@+id/lottie"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sorry this application has a fatal error, please contact the developer to fix it."
+        android:gravity="center_horizontal"
+        android:layout_below="@id/lottie"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginTop="10sp"
+        android:id="@+id/lottie_message" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/lottie_message"
+        android:layout_centerHorizontal="true"
+        android:text="Show Error log"
+        android:id="@+id/btn_show_log"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/btn_show_log"
+        android:layout_centerHorizontal="true"
+        android:text="Restart Application"
+        android:id="@+id/btn_restart"/>
+
+</RelativeLayout>
