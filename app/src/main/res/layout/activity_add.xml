@@ -68,7 +68,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/title"
-                    android:inputType="none"
                     android:id="@+id/edt_title"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +84,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
-                    android:inputType="none"
                     android:id="@+id/edt_username"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -103,7 +101,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
-                    android:inputType="none"
                     android:id="@+id/edt_password"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -121,7 +118,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/re_password"
-                    android:inputType="none"
                     android:id="@+id/edt_re_password"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -138,7 +134,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/description"
-                    android:inputType="none"
                     android:id="@+id/edt_desc"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -155,7 +150,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tag"
-                    android:inputType="none"
                     android:id="@+id/edt_tags"/>
 
             </com.google.android.material.textfield.TextInputLayout>
