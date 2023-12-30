@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 app:startIconDrawable="@drawable/baseline_title_24"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 app:startIconDrawable="@drawable/baseline_person_24"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -94,7 +94,7 @@
                 android:layout_marginBottom="15dp"
                 app:endIconMode="password_toggle"
                 app:startIconDrawable="@drawable/baseline_lock_24"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -111,7 +111,7 @@
                 android:layout_marginBottom="15dp"
                 app:endIconMode="password_toggle"
                 app:startIconDrawable="@drawable/baseline_lock_24"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 app:startIconDrawable="@drawable/baseline_description_24"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 app:startIconDrawable="@drawable/baseline_tag_24"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText

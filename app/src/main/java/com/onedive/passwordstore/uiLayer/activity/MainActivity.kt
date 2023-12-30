@@ -14,8 +14,8 @@ import com.onedive.passwordstore.domainLayer.dataSource.room.entity.PasswordRoom
 import com.onedive.passwordstore.domainLayer.repository.impl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.uiLayer.adapter.PasswordDataAdapter
 import com.onedive.passwordstore.uiLayer.adapter.PasswordDataTypeAdapter
-import com.onedive.passwordstore.utils.Const
 import com.onedive.passwordstore.utils.Const.EXTRA_DETAIL_KEY
+import com.onedive.passwordstore.utils.Const.EXTRA_EDIT
 import com.onedive.passwordstore.utils.Const.EXTRA_LIST_BY_TAG
 import com.onedive.passwordstore.utils.toAnotherActivity
 import com.onedive.passwordstore.viewmodel.PasswordViewModel
@@ -36,22 +36,23 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMainBinding.inflate(layoutInflater))
-
         setSupportActionBar(binding.toolbar)
-        binding.fabAdd.setOnClickListener { startActivity(Intent(this, AddPasswordActivity::class.java)) }
 
+        binding.fabAdd.setOnClickListener {
+            startActivity(Intent(this, AddPasswordActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_settings) {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     override fun deviceSecurityIsAvailable() {
@@ -64,60 +65,54 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         setAdapterDistrictTypeData()
     }
 
+
     private fun setAdapterPasswordData() {
         viewModel.getAll.observe(this) { list ->
 
-            passwordDataAdapter = PasswordDataAdapter(
-                context = this,
-                list = list,
-                onClick = {
-                    toAnotherActivity(
-                        key = EXTRA_DETAIL_KEY,
-                        value = list[it].id.toString(),
-                        from = this,
-                        to = DetailPasswordActivity::class.java
-                    )
-                },
+            passwordDataAdapter = PasswordDataAdapter(context = this, list = list, onClick = {
+                toAnotherActivity(
+                    key = EXTRA_DETAIL_KEY,
+                    value = list[it].id.toString(),
+                    from = this,
+                    to = DetailPasswordActivity::class.java
+                )},
                 onLongClick = { // can only select single data
-                    if (actionMode == null){
 
+                    if (actionMode == null){
                         actionMode = binding.toolbar.startActionMode(actionCallback)
+
                         id = list[it].id!!
                         position = it
-                        binding.rvPassword.layoutManager!!.findViewByPosition(position)!!.background = AppCompatResources.getDrawable(this, R.color.seed)
+
+                        binding.rvPassword.layoutManager!!.findViewByPosition(position)!!.apply {
+                            background = AppCompatResources.getDrawable(this@MainActivity,android.R.color.darker_gray)
+                        }
 
                     }
                 }
-
-            ).also {
-                binding.rvPassword.adapter = it
-
-                if (it.itemCount == 0) {
-                    binding.lottieParent.parent.visibility = View.VISIBLE
-                } else {
-                    binding.lottieParent.parent.visibility = View.GONE
-                }
-
+            )
+            binding.rvPassword.adapter = passwordDataAdapter
+            if (passwordDataAdapter.itemCount == 0) {
+                binding.lottieParent.parent.visibility = View.VISIBLE
+            }  else {
+                binding.lottieParent.parent.visibility = View.GONE
             }
+
         }
     }
 
     private fun setAdapterDistrictTypeData() {
         viewModel.getDistrictTag.observe(this) { list ->
 
-            PasswordDataTypeAdapter(
-                tagName = list,
-                onClick = {
-                    toAnotherActivity(
-                        key = EXTRA_LIST_BY_TAG,
-                        value = list[it],
-                        from = this,
-                        to = ListByTagActivity::class.java
-                    )
-                },
-                context = this
+            PasswordDataTypeAdapter(context = this, tagName = list, onClick = {
+                toAnotherActivity(
+                    key = EXTRA_LIST_BY_TAG,
+                    value = list[it],
+                    from = this,
+                    to = ListByTagActivity::class.java
+                )},
 
-            ).also { adapter -> binding.rvTags.adapter = adapter }
+            ).also {  binding.rvTags.adapter = it }
         }
     }
 
@@ -129,16 +124,15 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
             return true
         }
 
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            return false
-        }
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean = false
+
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
 
                 R.id.action_edit -> {
                     toAnotherActivity(
-                        key = Const.EXTRA_EDIT,
+                        key = EXTRA_EDIT,
                         value = id.toString(),
                         from = this@MainActivity,
                         to = EditPasswordActivity::class.java
@@ -163,5 +157,7 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
             mode.finish()
             actionMode = null
         }
+
     }
+
 }
