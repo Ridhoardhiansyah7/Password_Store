@@ -19,7 +19,7 @@
         tools:targetApi="33">
 
         <activity
-            android:name=".uiLayer.activity.MainActivity"
+            android:name=".presentation.activity.MainActivity"
             android:exported="true">
 
             <intent-filter>
@@ -30,17 +30,17 @@
 
         </activity>
 
-        <activity android:name=".uiLayer.activity.AddPasswordActivity"/>
+        <activity android:name=".presentation.activity.AddPasswordActivity"/>
 
-        <activity android:name=".uiLayer.activity.DetailPasswordActivity"/>
+        <activity android:name=".presentation.activity.DetailPasswordActivity"/>
 
-        <activity android:name=".uiLayer.activity.ListByTagActivity"/>
+        <activity android:name=".presentation.activity.ListByTagActivity"/>
 
-        <activity android:name=".uiLayer.activity.EditPasswordActivity"/>
+        <activity android:name=".presentation.activity.EditPasswordActivity"/>
 
-        <activity android:name=".uiLayer.activity.SettingsActivity"/>
+        <activity android:name=".presentation.activity.SettingsActivity"/>
 
-        <activity android:name=".uiLayer.activity.CrashActivity"
+        <activity android:name=".presentation.activity.CrashActivity"
             android:process=":error_activity"
             android:label="Error"
             android:exported="true">
