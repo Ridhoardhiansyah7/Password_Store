@@ -17,10 +17,10 @@
 
 Password Store uses a number of open source projects to work properly:
 
-- [Java] -This project uses Kotlin language arround 85%
-- [Kotlin] - This project uses Java language around 15%
+- [Kotlin] -This project uses Kotlin language around 85%
+- [Java] - This project uses Java language around 15%
 - [Kotlin coroutine] - This project uses Kotlin coroutines so it will not interfere with the UI thread in displaying large amounts of data
-- [ViewModel Arsitectutre] - This project uses an architectural View Model, one of the advantages of which is that data will not be lost if there is a change in screen orientation
+- [ViewModel Architecture] - This project uses an architectural View Model, one of the advantages of which is that data will not be lost if there is a change in screen orientation
 - [AndroidFramework] - Standard SDK
 
 ## App Screenshots
@@ -51,9 +51,9 @@ Password Store uses a number of open source projects to work properly:
 
 ## License
 
-MIT
+MIT Licence
 
-```xml
+``` xml
 Copyright (c) 2024 Ridho Ardhiansyah
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

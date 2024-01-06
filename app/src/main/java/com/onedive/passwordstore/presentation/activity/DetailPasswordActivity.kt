@@ -5,9 +5,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import com.onedive.passwordstore.R
-import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
 import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityDetailBinding
+import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
 import com.onedive.passwordstore.utils.Const.EXTRA_DETAIL_KEY
@@ -18,7 +18,7 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
 
     private var id:Long = 0
 
-    private val viewModel: PasswordViewModel<PasswordRoomDatabaseEntity> by viewModels {
+    private val viewModel: PasswordViewModel<DatabaseModelDTO> by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
     }
 

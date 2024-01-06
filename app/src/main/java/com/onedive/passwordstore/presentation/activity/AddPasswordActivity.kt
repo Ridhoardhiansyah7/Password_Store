@@ -1,14 +1,15 @@
 package com.onedive.passwordstore.presentation.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.onedive.passwordstore.R
-import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
 import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityAddBinding
+import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
 import com.onedive.passwordstore.utils.getCurrentLocaleTime
@@ -20,7 +21,7 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
 
     var color: Int = 0xFF006785.toInt() // default color if nothing is selected
 
-    private val viewModel: PasswordViewModel<PasswordRoomDatabaseEntity> by viewModels {
+    private val viewModel: PasswordViewModel<DatabaseModelDTO> by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
     }
 
@@ -55,6 +56,7 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
             .setTitle(getString(R.string.pick_color))
             .setPositiveButton(getString(R.string.confirm_ok),object : ColorEnvelopeListener {
 
+                @SuppressLint("SetTextI18n")
                 override fun onColorSelected(envelope: ColorEnvelope, fromUser: Boolean) {
                     if (fromUser){
                         binding.edtColor.setText("#${envelope.hexCode}")
@@ -87,7 +89,7 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
             if (password != rePassword) {
                 Toast.makeText(this,getString(R.string.input_pass_not_equals),Toast.LENGTH_LONG).show()
             } else {
-                viewModel.upsert(PasswordRoomDatabaseEntity(title,username,password,description,color,tags,getCurrentLocaleTime(),id))
+                viewModel.upsert(DatabaseModelDTO(title,username,password,description,color,tags,getCurrentLocaleTime(),id))
                 Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show()
                 finish()
             }

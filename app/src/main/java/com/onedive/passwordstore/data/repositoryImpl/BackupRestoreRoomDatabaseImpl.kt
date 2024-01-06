@@ -39,7 +39,7 @@ class BackupRestoreRoomDatabaseImpl(
     }
 
     /**
-     * For more compleate documentation please see https://github.com/rafi0101/Android-Room-Database-Backup
+     * For more complete documentation please see https://github.com/rafi0101/Android-Room-Database-Backup
      */
     private fun backupRestoreHelper(
         context:Context,

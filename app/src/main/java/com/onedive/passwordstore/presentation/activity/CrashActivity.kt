@@ -15,7 +15,7 @@ import com.onedive.passwordstore.utils.showDialog
  *
  *
  * for more documentation please see https://github.com/Ereza/CustomActivityOnCrash
- * @see com.onedive.passwordstore.uiLayer.MyApplication
+ * @see com.onedive.passwordstore.presentation.MyApplication
  * @see CustomActivityOnCrash
  * @see CaocConfig
  *

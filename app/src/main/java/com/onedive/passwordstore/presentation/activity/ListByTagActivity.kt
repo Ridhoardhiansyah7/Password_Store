@@ -2,9 +2,9 @@ package com.onedive.passwordstore.presentation.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
 import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityListByTagBinding
+import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.adapter.PasswordDataAdapter
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
@@ -17,7 +17,7 @@ class ListByTagActivity : BaseActivity<ActivityListByTagBinding>() {
 
     private lateinit var tagName:String
 
-    private val viewModel: PasswordViewModel<PasswordRoomDatabaseEntity> by viewModels {
+    private val viewModel: PasswordViewModel<DatabaseModelDTO> by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
     }
 
@@ -51,7 +51,7 @@ class ListByTagActivity : BaseActivity<ActivityListByTagBinding>() {
                         to = DetailPasswordActivity::class.java
                     )
                },
-                onLongClick = {}
+                onLongClick = {_,_->}
 
 
             ).also { binding.rvListByType.adapter = it }

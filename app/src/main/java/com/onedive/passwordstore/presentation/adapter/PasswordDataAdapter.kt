@@ -3,14 +3,15 @@ package com.onedive.passwordstore.presentation.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
 import com.onedive.passwordstore.databinding.PasswordItemBinding
+import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 
 class PasswordDataAdapter(
-    private val list: List<PasswordRoomDatabaseEntity>,
+    private val list: List<DatabaseModelDTO>,
     private val onClick : (Int) -> Unit,
-    private val onLongClick : (Int) -> Unit,
+    private val onLongClick : (Int,View) -> Unit,
     context: Context,
 ) : BaseAdapter<PasswordItemBinding>(context) {
 
@@ -32,7 +33,7 @@ class PasswordDataAdapter(
                 itemImage.setBackgroundColor(roundedColor)
                 holder.itemView.setOnClickListener { onClick(position) }
                 holder.itemView.setOnLongClickListener {
-                    onLongClick(position)
+                    onLongClick(position,holder.itemView)
                     true
                 }
             }

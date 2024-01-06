@@ -1,17 +1,21 @@
 package com.onedive.passwordstore.presentation.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.InsetDrawable
 import android.os.Bundle
-import android.view.ActionMode
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.GravityCompat
 import com.onedive.passwordstore.R
-import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
 import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityMainBinding
+import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.adapter.PasswordDataAdapter
 import com.onedive.passwordstore.presentation.adapter.PasswordDataTypeAdapter
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
@@ -23,12 +27,10 @@ import com.onedive.passwordstore.utils.toAnotherActivity
 
 class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
 
-    private var actionMode : ActionMode? = null
     private lateinit var passwordDataAdapter: PasswordDataAdapter
-    private var id: Long = 0 // database item id
-    private var position: Int = 0 // recyclerview item position
+    private lateinit var popupMenu: PopupMenu
 
-    private val viewModel: PasswordViewModel<PasswordRoomDatabaseEntity> by viewModels {
+    private val viewModel: PasswordViewModel<DatabaseModelDTO> by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
     }
 
@@ -41,6 +43,7 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         binding.fabAdd.setOnClickListener {
             startActivity(Intent(this, AddPasswordActivity::class.java))
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,29 +69,50 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
     }
 
 
+    @SuppressLint("RestrictedApi")
     private fun setAdapterPasswordData() {
+
         viewModel.getAll().observe(this) { list ->
 
-            passwordDataAdapter = PasswordDataAdapter(context = this, list = list, onClick = {
-                toAnotherActivity(
-                    key = EXTRA_DETAIL_KEY,
-                    value = list[it].id.toString(),
-                    from = this,
-                    to = DetailPasswordActivity::class.java
-                )},
-                onLongClick = { // can only select single data
+            passwordDataAdapter = PasswordDataAdapter(
+                context = this,
+                list = list,
+                onClick = { toDetailPassword(list[it].id!!) },
+                onLongClick = { position, view ->
 
-                    if (actionMode == null){
-                        actionMode = binding.toolbar.startActionMode(actionCallback)
+                    popupMenu = PopupMenu(this,view,GravityCompat.END)
+                    popupMenu.menuInflater.inflate(R.menu.edit_delete_menu,popupMenu.menu)
+                    popupMenu.setOnMenuItemClickListener {menuItem ->
 
-                        id = list[it].id!!
-                        position = it
-
-                        binding.rvPassword.layoutManager!!.findViewByPosition(position)!!.apply {
-                            background = AppCompatResources.getDrawable(this@MainActivity,android.R.color.darker_gray)
+                        when(menuItem.itemId){
+                            R.id.action_edit -> { toEditActivity(list[position].id!!) }
+                            R.id.action_delete -> { deleteDataPassword(list[position].id!!) }
                         }
 
+                        true
                     }
+
+                    if (popupMenu.menu is MenuBuilder){
+                        val menuBuilder = popupMenu.menu as MenuBuilder
+                        menuBuilder.setOptionalIconsVisible(true)
+
+                        for (item in menuBuilder.visibleItems){
+
+                            val iconMarginPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,10.toFloat(),resources.displayMetrics).toInt()
+                            if (item.icon != null){
+
+                                item.icon = object : InsetDrawable(item.icon,iconMarginPx,0,iconMarginPx,0){
+
+                                    override fun getIntrinsicWidth(): Int {
+                                        return intrinsicHeight + iconMarginPx + iconMarginPx
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+                    popupMenu.show()
                 }
             )
             binding.rvPassword.adapter = passwordDataAdapter
@@ -101,63 +125,44 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun setAdapterDistrictTypeData() {
-        viewModel.getDistinctTags().observe(this) { list ->
-
-            PasswordDataTypeAdapter(context = this, tagName = list, onClick = {
-                toAnotherActivity(
-                    key = EXTRA_LIST_BY_TAG,
-                    value = list[it],
-                    from = this,
-                    to = ListByTagActivity::class.java
-                )},
-
-            ).also {  binding.rvTags.adapter = it }
-        }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun deleteDataPassword(id:Long){
+        viewModel.deleteById(id)
+        passwordDataAdapter.notifyDataSetChanged()
+        popupMenu.dismiss()
     }
 
-    private val actionCallback: ActionMode.Callback = object : ActionMode.Callback {
+    private fun toEditActivity(id:Long){
+        toAnotherActivity(key=EXTRA_EDIT,value=id.toString(),from=this,to=EditPasswordActivity::class.java)
+        popupMenu.dismiss()
+    }
 
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            mode.menuInflater.inflate(R.menu.edit_delete_menu, menu)
-            mode.title = getString(R.string.select_option_here)
-            return true
-        }
+    private fun toDetailPassword(id:Long){
+        toAnotherActivity(
+            key = EXTRA_DETAIL_KEY,
+            value = id.toString(),
+            from = this,
+            to = DetailPasswordActivity::class.java
+        )
+    }
 
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean = false
+    private fun setAdapterDistrictTypeData() {
 
-
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            return when (item.itemId) {
-
-                R.id.action_edit -> {
-                    toAnotherActivity(
-                        key = EXTRA_EDIT,
-                        value = id.toString(),
-                        from = this@MainActivity,
-                        to = EditPasswordActivity::class.java
-                    )
-                    mode.finish()
-                    true
-                }
-
-                R.id.action_delete -> {
-                    viewModel.deleteById(id)
-                    passwordDataAdapter.notifyItemRemoved(position)
-                    mode.finish()
-                    true
-                }
-
-                else -> false
+        viewModel.getDistinctTags().observe(this) { list ->
+            PasswordDataTypeAdapter(context = this,tagName = list,onClick = { toByTagActivity(list[it]) }).also {
+                binding.rvTags.adapter = it
             }
         }
 
-        override fun onDestroyActionMode(mode: ActionMode) {
-            binding.rvPassword.layoutManager!!.findViewByPosition(position)!!.background = null
-            mode.finish()
-            actionMode = null
-        }
+    }
 
+    private fun toByTagActivity(tagName:String){
+        toAnotherActivity(
+            key = EXTRA_LIST_BY_TAG,
+            value = tagName,
+            from = this,
+            to = ListByTagActivity::class.java
+        )
     }
 
 }
