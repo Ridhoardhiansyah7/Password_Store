@@ -58,7 +58,7 @@ public abstract class BaseActivity<B extends ViewBinding> extends AppCompatActiv
      * @see PasswordRoomDao
      */
     protected PasswordRoomDao getRoomDatabaseDao(){
-        return PasswordDatabase.Companion.getInstance(this).dao();
+        return PasswordDatabase.getInstance(this).dao();
     }
 
 

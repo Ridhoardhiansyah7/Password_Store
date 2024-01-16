@@ -8,10 +8,14 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        CaocConfig.Builder.create()
-            .errorActivity(CrashActivity::class.java)
-            .showErrorDetails(true)
-            .trackActivities(true)
-            .apply()
+        caocConfigBuilder().apply()
     }
+
+    private fun caocConfigBuilder() = CaocConfig.Builder.create().apply {
+        errorActivity(CrashActivity::class.java)
+        showRestartButton(true)
+        showErrorDetails(true)
+        trackActivities(true)
+    }
+
 }

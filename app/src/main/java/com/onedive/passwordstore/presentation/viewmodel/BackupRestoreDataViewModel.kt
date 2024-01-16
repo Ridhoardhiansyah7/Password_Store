@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
  *
  * @see BackupRestoreDatabaseRepository
  * @see BackupRestoreDataViewModelFactory
- * @author Ridh
  */
 class BackupRestoreDataViewModel(
     private val repository: BackupRestoreDatabaseRepository

@@ -11,9 +11,8 @@ private var encryptedSharedPreferences:SharedPreferences? = null
 
 /**
  * this function is used to get the default sharedPreference
- * @author Ridh
  */
-internal fun getDefaultSharedPreference(context:Context) : SharedPreferences {
+internal fun sharedPreference(context:Context) : SharedPreferences {
     if (sharedPreferences == null){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     }
@@ -22,8 +21,8 @@ internal fun getDefaultSharedPreference(context:Context) : SharedPreferences {
 
 /**
  * This function is used to get encrypted preferences
- * @author Ridh
  */
+@Suppress("UNUSED")
 internal fun getEncryptedSharedPreferences(context: Context) : SharedPreferences {
     if (encryptedSharedPreferences == null){
 

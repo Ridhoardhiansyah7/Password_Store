@@ -6,6 +6,10 @@ package com.onedive.passwordstore.utils;
  */
 public final class Const {
 
+    static {
+        System.loadLibrary("native-lib");
+    }
+
     //NAVIGATION KEY DATA THAT CONTAINS VALUES SENT TO OTHER ACTIVITIES
 
     // MainActivity / ListByTagActivity -> DetailPasswordActivity
@@ -20,9 +24,16 @@ public final class Const {
 
     //PREFERENCE key data is used to store application settings preferences
     public static final String LOCK_APP_KEY_PREFERENCE = "lockPreference";
-    public static final String ENCRYPT_KEY_PREFERENCE = "encryptPreference";
+    //public static final String ENCRYPT_KEY_PREFERENCE = "encryptPreference";
 
-    //No
+    //DEVELOPER CONTACT NUM
     public static final String DEVELOPER_CONTACT_NUMBER = "62895323021645";
+
+    /**
+     * Default encryption key, implemented using native c++,
+     * you may be able to change the way the key is stored, one of them is using encrypt shared preference
+     * @return default key in native c++
+     */
+    public static native String getNativeEncryptKey();
 
 }

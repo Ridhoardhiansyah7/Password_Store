@@ -1,6 +1,5 @@
 package com.onedive.passwordstore.presentation.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,6 @@ class PasswordDataAdapter(
     }
 
 
-    @SuppressLint("NewApi")
     override fun bindVh(holder: BaseHolder<PasswordItemBinding>, position: Int) {
         with(list[position]){
 

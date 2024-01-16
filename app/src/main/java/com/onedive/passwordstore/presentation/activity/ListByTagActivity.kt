@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityListByTagBinding
-import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.adapter.PasswordDataAdapter
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
@@ -17,7 +16,7 @@ class ListByTagActivity : BaseActivity<ActivityListByTagBinding>() {
 
     private lateinit var tagName:String
 
-    private val viewModel: PasswordViewModel<DatabaseModelDTO> by viewModels {
+    private val viewModel: PasswordViewModel by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
     }
 
@@ -27,6 +26,8 @@ class ListByTagActivity : BaseActivity<ActivityListByTagBinding>() {
 
 
         binding.inc.toolbar.setNavigationOnClickListener { finish() }
+
+        //Check whether the previously submitted tag name data exists, if there is display data based on the tag
         if (intent.hasExtra(EXTRA_LIST_BY_TAG)){
             tagName = intent.getStringExtra(EXTRA_LIST_BY_TAG)!!
             binding.inc.collapse.title = tagName

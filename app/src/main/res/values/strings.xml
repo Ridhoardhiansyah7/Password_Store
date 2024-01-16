@@ -2,8 +2,7 @@
 <resources>
     <string name="app_name">Password Store</string>
 
-    <!-- XML FILE HARDCODED -->
-    <string name="pick_color">Pick Color</string>
+    <!-- XML CONSTANT VALUE -->
     <string name="title">Title</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -12,52 +11,47 @@
     <string name="tag">Tag</string>
 
     <string name="edit_ignored">* changes made on this page will be ignored</string>
-    <string name="input_encrypt">Enter the password that will be used for encryption</string>
     <string name="no_data_saved">No data has been saved yet</string>
 
     <string name="save_menu">Save</string>
     <string name="edit_menu">Edit</string>
-    <string name="delete_menu">Delete</string>
-    <!-- END XML FILE HARDCODED -->
 
-    <!-- Activity or Fragment HARDCODED -->
+    <string name="lock_preference_title">Lock App</string>
+    <string name="lock_preference_summary">Request password when app is opened, and view password details</string>
+    <string name="lock_preference_summary_not_enable">Cannot be activated because the device is not assigned a password/biometric password</string>
+
+    <string name="backup_preference_title">Backup data</string>
+    <string name="backup_preference_summary">Click to back up data </string>
+
+    <string name="restore_preference_title">Restore data</string>
+    <string name="restore_preference_summary">Click to restore data, encryption password is required! </string>
+
+    <!-- END XML CONSTANT VALUE -->
+
+    <!-- ACTIVITY / FRAGMENT CONSTANT VALUE -->
     <string name="add_password">Add Password</string>
+    <string name="setting">Settings</string>
+    <string name="pick_color">Pick Color</string>
     <string name="confirm_ok">Oke</string>
     <string name="confirm_close">Close</string>
-
-    <string name="select_option_here">Select Option here</string>
+    <string name="delete_data_message_title_dialog">Delete</string>
+    <string name="delete_data_message_summary_dialog">Are you sure you want to delete this data?</string>
 
     <string name="input_pass_not_equals">Password and Confirm Password values are not the same!</string>
     <string name="input_cannot_empty">some forms cannot be blank!</string>
     <string name="success">Success</string>
 
-    <string name="enter_device_password">Enter your password or biometric password in this device</string>
+    <string name="enter_device_password"> Is Locked</string>
     <string name="enter_device_password_desc">confirm that it\'s you</string>
-    <string name="setting">Settings</string>
-    <string name="key_cannot_null">The key cannot be empty</string>
 
-    <string name="title_set_encrypt_key">Set password for database encryption</string>
-    <string name="message_set_encrypt_key">This key is used to encrypt data,back up data and restore data</string>
+    <string name="backup_data_message_title_dialog">Backup Data</string>
+    <string name="backup_data_message_summary_dialog">Please do not exit the application before the backup process is complete</string>
 
-    <string name="enter_device_password_preference">Request password when app is opened, and view password details</string>
-    <string name="enter_device_password_preference_not_enable">Cannot be activated because the device is not assigned a password/biometric password</string>
-
-    <string name="encrypt_preference">Always encrypt data to keep data safe</string>
-    <string name="encrypt_preference_title">Database encryption</string>
-
-    <string name="backup_preference">Click to back up data </string>
-    <string name="backup_restore_preference_not_enable">For security, please activate the database encryption feature</string>
-    <string name="restore_preference">Click to restore data, encryption password is required! </string>
-
-    <string name="backup_data_title">Backup data</string>
-    <string name="backup_data_message">Please do not exit the application before the backup process is complete</string>
-
-    <string name="restore_data_title">Restore data</string>
-    <string name="restore_data_message">This process will delete the current data. Please do not exit the application before the restore process is complete</string>
+    <string name="restore_data_message_title_dialog">Restore Data</string>
+    <string name="restore_data_message_summary_dialog">This process will delete the current data. Please do not exit the application before the restore process is complete</string>
 
     <string name="err_no_file_selected">No files selected, operation aborted</string>
     <string name="err_back_button_pressed">The back button is clicked, while the file has not been saved to a location in internal storage, the operation is cancelled</string>
-
-    <!-- END Activity or Fragment HARDCODED -->
+    <!-- END ACTIVITY / FRAGMENT CONSTANT VALUE -->
 
 </resources>

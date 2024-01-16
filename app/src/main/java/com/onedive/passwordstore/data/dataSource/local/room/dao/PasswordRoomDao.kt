@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.Flow
  * Note : For More Complete documentation please see Android Developer website
  *
  * @see Dao
- * @author Ridh
  *
  */
 interface PasswordRoomDao {

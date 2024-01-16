@@ -41,13 +41,14 @@ class CrashActivity : BaseActivity<ActivityCrashBinding>(){
         }
 
         binding.btnRestart.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            val config= CustomActivityOnCrash.getConfigFromIntent(intent) !!
+            CustomActivityOnCrash.restartApplication(this,config)
         }
 
 
     }
 
+    //share error log to developer whatsapp
     private fun shareErrorLogToDeveloper(stackTraceError:String){
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("https://wa.me/${Const.DEVELOPER_CONTACT_NUMBER}?text=$stackTraceError")

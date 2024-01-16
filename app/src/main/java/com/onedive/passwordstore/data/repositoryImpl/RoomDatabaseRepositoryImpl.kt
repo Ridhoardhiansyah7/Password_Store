@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.map
  *
  * Note : This implementation class only applies to room database.
  * @see DatabaseRepository
- * @author Ridh
  */
 class RoomDatabaseRepositoryImpl(private val passwordRoomDao: PasswordRoomDao) : DatabaseRepository<DatabaseModelDTO> {
 

@@ -5,19 +5,10 @@
 
         <SwitchPreference
             app:key="lock"
-            app:title="Kunci Aplikasi"
+            app:title="@string/lock_preference_title"
+            app:summary="@string/lock_preference_summary_not_enable"
             app:enabled="false"
-            app:summary="@string/enter_device_password_preference_not_enable"
             app:icon="@drawable/baseline_lock_24"/>
-
-
-        <SwitchPreference
-            app:key="encrypt"
-            app:title="@string/encrypt_preference_title"
-            app:enabled="true"
-            app:summary="@string/encrypt_preference"
-            app:icon="@drawable/baseline_security_24"/>
-
 
     </PreferenceCategory>
 
@@ -25,16 +16,14 @@
 
         <Preference
             app:key="backup"
-            app:title="Backup data"
-            app:enabled="false"
-            app:summary="@string/backup_restore_preference_not_enable"
+            app:title="@string/backup_preference_title"
+            app:summary="@string/backup_preference_summary"
             app:icon="@drawable/baseline_backup_24"/>
 
         <Preference
             app:key="restore"
-            app:title="Restore data"
-            app:enabled="false"
-            app:summary="@string/backup_restore_preference_not_enable"
+            app:title="@string/restore_preference_title"
+            app:summary="@string/restore_preference_summary"
             app:icon="@drawable/baseline_restore_page_24"/>
 
     </PreferenceCategory>

@@ -9,6 +9,6 @@
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/baseline_delete_24"
-        android:title="@string/delete_menu"/>
+        android:title="@string/delete_data_message_title_dialog"/>
 
 </menu>

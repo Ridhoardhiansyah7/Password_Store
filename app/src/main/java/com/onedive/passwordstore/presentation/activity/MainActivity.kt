@@ -15,7 +15,6 @@ import androidx.core.view.GravityCompat
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityMainBinding
-import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.adapter.PasswordDataAdapter
 import com.onedive.passwordstore.presentation.adapter.PasswordDataTypeAdapter
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
@@ -23,6 +22,7 @@ import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewMode
 import com.onedive.passwordstore.utils.Const.EXTRA_DETAIL_KEY
 import com.onedive.passwordstore.utils.Const.EXTRA_EDIT
 import com.onedive.passwordstore.utils.Const.EXTRA_LIST_BY_TAG
+import com.onedive.passwordstore.utils.showDialog
 import com.onedive.passwordstore.utils.toAnotherActivity
 
 class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
@@ -30,7 +30,7 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
     private lateinit var passwordDataAdapter: PasswordDataAdapter
     private lateinit var popupMenu: PopupMenu
 
-    private val viewModel: PasswordViewModel<DatabaseModelDTO> by viewModels {
+    private val viewModel: PasswordViewModel by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
     }
 
@@ -58,12 +58,12 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         return true
     }
 
-    override fun deviceSecurityIsAvailable() {
+    override fun confirmPasswordOrBiometricPasswordIsSuccessfully() {
         setAdapterPasswordData()
         setAdapterDistrictTypeData()
     }
 
-    override fun deviceSecurityIsNotAvailable() {
+    override fun noAvailablePasswordOrBiometricPasswordInThisDevice() {
         setAdapterPasswordData()
         setAdapterDistrictTypeData()
     }
@@ -125,15 +125,45 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         }
     }
 
+    private fun setAdapterDistrictTypeData() {
+
+        viewModel.getDistinctTags().observe(this) { list ->
+            PasswordDataTypeAdapter(
+                context = this,
+                tagName = list,
+                onClick = { toByTagActivity(list[it]) }
+            ).also {
+                binding.rvTags.adapter = it
+            }
+        }
+
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun deleteDataPassword(id:Long){
-        viewModel.deleteById(id)
-        passwordDataAdapter.notifyDataSetChanged()
-        popupMenu.dismiss()
+
+       showDialog(
+            context = this,
+            title = getString(R.string.delete_data_message_title_dialog),
+            message = getString(R.string.delete_data_message_summary_dialog),
+            positiveBtnText = getString(R.string.confirm_ok),
+            negativeBtnText = getString(R.string.confirm_close),
+            positiveBtnClick = {
+                viewModel.deleteById(id)
+                passwordDataAdapter.notifyDataSetChanged()
+                popupMenu.dismiss()
+            },
+            neutralBtnClick = null
+        )
     }
 
     private fun toEditActivity(id:Long){
-        toAnotherActivity(key=EXTRA_EDIT,value=id.toString(),from=this,to=EditPasswordActivity::class.java)
+        toAnotherActivity(
+            key = EXTRA_EDIT,
+            value = id.toString(),
+            from = this,
+            to = EditPasswordActivity::class.java
+        )
         popupMenu.dismiss()
     }
 
@@ -144,16 +174,6 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
             from = this,
             to = DetailPasswordActivity::class.java
         )
-    }
-
-    private fun setAdapterDistrictTypeData() {
-
-        viewModel.getDistinctTags().observe(this) { list ->
-            PasswordDataTypeAdapter(context = this,tagName = list,onClick = { toByTagActivity(list[it]) }).also {
-                binding.rvTags.adapter = it
-            }
-        }
-
     }
 
     private fun toByTagActivity(tagName:String){

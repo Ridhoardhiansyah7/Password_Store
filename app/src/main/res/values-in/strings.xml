@@ -2,8 +2,7 @@
 <resources>
     <string name="app_name">Password Store</string>
 
-    <!-- XML FILE HARDCODED -->
-    <string name="pick_color">Pilih Warna</string>
+    <!-- XML CONSTANT VALUE -->
     <string name="title">Judul</string>
     <string name="username">Username</string>
     <string name="password">Kata Sandi</string>
@@ -12,51 +11,47 @@
     <string name="tag">Penanda</string>
 
     <string name="edit_ignored">* Perubahan yang terjadi disini akan diabaikan</string>
-    <string name="input_encrypt">Masukan katasandi yang akan digunakan untuk enkripsi data</string>
     <string name="no_data_saved">Belum ada data yang disimpan</string>
 
     <string name="save_menu">Simpan</string>
     <string name="edit_menu">Sunting</string>
-    <string name="delete_menu">Hapus</string>
-    <!-- END XML FILE HARDCODED -->
 
-    <!-- Activity or Fragment HARDCODED -->
+    <string name="lock_preference_title">Kunci Aplikasi</string>
+    <string name="lock_preference_summary">Minta kata sandi saat aplikasi dibuka, dan melihat detail password</string>
+    <string name="lock_preference_summary_not_enable">Tidak dapat diaktifkan karena perangkat tidak diberi katasandi / katasandi biometrik</string>
+
+    <string name="backup_preference_title">Cadangkan data</string>
+    <string name="backup_preference_summary">Klik untuk mencadangkan data </string>
+
+    <string name="restore_preference_title">Kembalikan data</string>
+    <string name="restore_preference_summary">Klik untuk mengembalikan data, katasandi enkripsi diperlukan! </string>
+
+    <!-- END XML CONSTANT VALUE -->
+
+    <!-- ACTIVITY / FRAGMENT CONSTANT VALUE -->
     <string name="add_password">Tambahkan Password</string>
+    <string name="setting">Pengaturan</string>
+    <string name="pick_color">Pilih Warna</string>
     <string name="confirm_ok">Oke</string>
     <string name="confirm_close">Tutup</string>
-
-    <string name="select_option_here">Pilih opsi </string>
+    <string name="delete_data_message_title_dialog">Hapus</string>
+    <string name="delete_data_message_summary_dialog">Apakah anda yakin menghapus data ini ?</string>
 
     <string name="input_pass_not_equals">Katasandi dan konfirmasi katasandi nilai nya tidak sama!</string>
     <string name="input_cannot_empty">Beberapa formulir tidak boleh kosong!</string>
     <string name="success">Sukses</string>
 
-    <string name="enter_device_password">Masukan katasandi / katasandi biometrik hp anda</string>
+    <string name="enter_device_password"> Di Kunci</string>
     <string name="enter_device_password_desc">Konfirmasi bahwa ini adalah anda </string>
-    <string name="setting">Pengaturan</string>
-    <string name="key_cannot_null">Kunci tidak boleh kosong</string>
 
-    <string name="title_set_encrypt_key">Setel password untuk enkripsi database</string>
-    <string name="message_set_encrypt_key">Kunci ini digunakan untuk mengenkripsi data, membuat cadangan data, dan memulihkan data</string>
+    <string name="backup_data_message_title_dialog">Cadangkan Data</string>
+    <string name="backup_data_message_summary_dialog">Harap jangan keluar dari aplikasi sebelum proses backup selesai,File output hanya dapat digunakan oleh aplikasi ini</string>
 
-    <string name="enter_device_password_preference">Minta kata sandi saat aplikasi dibuka, dan melihat detail password</string>
-    <string name="enter_device_password_preference_not_enable">Tidak dapat diaktifkan karena perangkat tidak diberi katasandi / katasandi biometrik</string>
-
-    <string name="encrypt_preference">Selalu enkripsi data agar data tetap aman</string>
-    <string name="encrypt_preference_title">Enkripsi Database</string>
-
-    <string name="backup_preference">Klik untuk mencadangkan data </string>
-    <string name="backup_restore_preference_not_enable">Untuk keamanan silahkan aktifkan fitur enkripsi database</string>
-    <string name="restore_preference">Klik untuk mengembalikan data, katasandi enkripsi diperlukan! </string>
-
-    <string name="backup_data_title">Cadangkan data</string>
-    <string name="backup_data_message">Harap jangan keluar dari aplikasi sebelum proses backup selesai</string>
-
-    <string name="restore_data_title">Kembalikan data</string>
-    <string name="restore_data_message">Proses ini akan menghapus data saat ini, Harap jangan keluar dari aplikasi sebelum proses restore selesai</string>
+    <string name="restore_data_message_title_dialog">Kembalikan Data</string>
+    <string name="restore_data_message_summary_dialog">Proses ini akan menghapus data saat ini, Harap jangan keluar dari aplikasi sebelum proses restore selesai</string>
 
     <string name="err_no_file_selected">Tidak ada file yang dipilih operasi dibatalkan</string>
     <string name="err_back_button_pressed">Tombol kembali di klik, sedangkan file cadangan belum di simpan pada penyimpanan perangkat</string>
+    <!-- END ACTIVITY / FRAGMENT CONSTANT VALUE -->
 
-    <!-- END Activity or Fragment HARDCODED -->
 </resources>

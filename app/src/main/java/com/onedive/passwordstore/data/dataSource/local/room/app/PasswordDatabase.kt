@@ -6,6 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.onedive.passwordstore.data.dataSource.local.room.dao.PasswordRoomDao
 import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
+import com.onedive.passwordstore.utils.Const
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 
 @Database(entities = [PasswordRoomDatabaseEntity::class], version = 1, exportSchema = true)
 abstract class PasswordDatabase : RoomDatabase() {
@@ -14,20 +17,28 @@ abstract class PasswordDatabase : RoomDatabase() {
 
     companion object{
 
-        /**
-         * Return : Instance of room database
-         */
         @Volatile private var INSTANCE: PasswordDatabase? = null
+        private const val DATABASE_NAME = "pass.db"
+
+        /**
+         * @return : Singleton instance of room database
+         * @param context : ApplicationContext
+         */
+        @JvmStatic
         fun getInstance(context: Context) : PasswordDatabase {
+
+            val passphrase = SQLiteDatabase.getBytes(Const.getNativeEncryptKey().toCharArray())
+            val supportFactory = SupportFactory(passphrase)
 
             return INSTANCE ?: synchronized(this){
 
                 val instance = Room.databaseBuilder(
                     context = context.applicationContext,
                     klass = PasswordDatabase::class.java,
-                    name = "pass.db"
+                    name = DATABASE_NAME
                 )
                     .fallbackToDestructiveMigration()
+                    .openHelperFactory(supportFactory)
                     .build()
                 INSTANCE = instance
 

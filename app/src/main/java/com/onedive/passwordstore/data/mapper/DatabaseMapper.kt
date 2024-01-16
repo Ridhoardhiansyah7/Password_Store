@@ -3,6 +3,8 @@ package com.onedive.passwordstore.data.mapper
 import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
 import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 
+//This is mapper extension
+
 fun PasswordRoomDatabaseEntity.toDatabaseModel() : DatabaseModelDTO {
     return DatabaseModelDTO(
         title = title,

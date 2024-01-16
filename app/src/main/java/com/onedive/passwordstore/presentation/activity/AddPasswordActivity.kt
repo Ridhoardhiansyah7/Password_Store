@@ -13,6 +13,7 @@ import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
 import com.onedive.passwordstore.utils.getCurrentLocaleTime
+import com.onedive.passwordstore.utils.showToast
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
@@ -21,7 +22,7 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
 
     var color: Int = 0xFF006785.toInt() // default color if nothing is selected
 
-    private val viewModel: PasswordViewModel<DatabaseModelDTO> by viewModels {
+    private val viewModel: PasswordViewModel by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
     }
 
@@ -50,15 +51,15 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showColorPickerDialog(){
+    private fun showColorPickerDialog() {
 
         ColorPickerDialog.Builder(this)
             .setTitle(getString(R.string.pick_color))
-            .setPositiveButton(getString(R.string.confirm_ok),object : ColorEnvelopeListener {
+            .setPositiveButton(getString(R.string.confirm_ok), object : ColorEnvelopeListener {
 
                 @SuppressLint("SetTextI18n")
                 override fun onColorSelected(envelope: ColorEnvelope, fromUser: Boolean) {
-                    if (fromUser){
+                    if (fromUser) {
                         binding.edtColor.setText("#${envelope.hexCode}")
                         binding.imgPreview.setBackgroundColor(envelope.color)
                         color = envelope.color
@@ -66,7 +67,7 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
                 }
 
             })
-            .setNegativeButton(R.string.confirm_close){ dialogInterface, _ ->
+            .setNegativeButton(R.string.confirm_close) { dialogInterface, _ ->
                 dialogInterface.dismiss()
             }
             .setBottomSpace(12)
@@ -75,7 +76,7 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
     }
 
 
-    protected open fun saveData(id:Long?) {
+    protected open fun saveData(id: Long?) {
 
         val title = binding.edtTitle.text.toString().trim()
         val username = binding.edtUsername.text.toString().trim()
@@ -84,18 +85,41 @@ open class AddPasswordActivity : BaseActivity<ActivityAddBinding>() {
         val description = binding.edtDesc.text.toString().trim()
         val tags = binding.edtTags.text.toString().trim()
 
-        if (username.isNotBlank() && password.isNotBlank() && rePassword.isNotBlank() && description.isNotBlank() && tags.isNotBlank()) {
+        if (username.isNotBlank()&&password.isNotBlank()&&rePassword.isNotBlank()&& description.isNotBlank()&&tags.isNotBlank()) {
 
             if (password != rePassword) {
-                Toast.makeText(this,getString(R.string.input_pass_not_equals),Toast.LENGTH_LONG).show()
+                showToast(
+                    context = this,
+                    message = getString(R.string.input_pass_not_equals),
+                    duration = Toast.LENGTH_LONG
+                )
             } else {
-                viewModel.upsert(DatabaseModelDTO(title,username,password,description,color,tags,getCurrentLocaleTime(),id))
-                Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show()
+                viewModel.upsert(
+                    DatabaseModelDTO(
+                        title = title,
+                        username = username,
+                        password = password,
+                        desc = description,
+                        roundedColor = color,
+                        tags = tags,
+                        date = getCurrentLocaleTime(),
+                        id = id
+                    )
+                )
+                showToast(
+                    context = this,
+                    message = getString(R.string.success),
+                    duration = Toast.LENGTH_SHORT
+                )
                 finish()
             }
 
         } else {
-            Toast.makeText(this,getString(R.string.input_cannot_empty), Toast.LENGTH_SHORT).show()
+            showToast(
+                context = this,
+                message = getString(R.string.input_cannot_empty),
+                duration = Toast.LENGTH_SHORT
+            )
         }
     }
 

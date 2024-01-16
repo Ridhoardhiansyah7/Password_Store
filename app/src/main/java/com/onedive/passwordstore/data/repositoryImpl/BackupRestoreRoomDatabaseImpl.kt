@@ -4,8 +4,6 @@ import android.content.Context
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.data.dataSource.local.room.app.PasswordDatabase
 import com.onedive.passwordstore.domain.repository.BackupRestoreDatabaseRepository
-import com.onedive.passwordstore.utils.Const
-import com.onedive.passwordstore.utils.getEncryptedSharedPreferences
 import de.raphaelebner.roomdatabasebackup.core.RoomBackup
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +15,6 @@ import kotlinx.coroutines.withContext
  * Note : This implementation class only applies to database room.
  * @see BackupRestoreDatabaseRepository
  * @see RoomBackup
- * @author Ridh
  */
 class BackupRestoreRoomDatabaseImpl(
     private val roomBackup: RoomBackup,
@@ -51,10 +48,9 @@ class BackupRestoreRoomDatabaseImpl(
         roomBackup
             .database(PasswordDatabase.getInstance(context))
             .enableLogDebug(true)
-            .backupIsEncrypted(true)
-            .customEncryptPassword(getEncryptedSharedPreferences(context).getString(Const.ENCRYPT_KEY_PREFERENCE,null) !!)
             .backupLocation(RoomBackup.BACKUP_FILE_LOCATION_CUSTOM_DIALOG)
             .maxFileCount(1)
+            .customBackupFileName("PasswordStore.db.sqlite3")
             .apply {
                 if (operation == BackupRestoreOperation.BACKUP) backup() else restore()
 

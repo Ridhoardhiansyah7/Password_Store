@@ -31,9 +31,15 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-
     buildFeatures{
         viewBinding = true
+    }
+    externalNativeBuild {
+        ndkVersion = "26.1.10909125"
+        cmake {
+            path("CMakeLists.txt")
+            version = "3.22.1"
+        }
     }
 }
 
@@ -46,6 +52,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.preference:preference-ktx:1.2.1")
     implementation("androidx.security:security-crypto:1.0.0")
+    implementation("androidx.biometric:biometric:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.github.skydoves:colorpickerview:2.3.0")
 
@@ -67,6 +74,7 @@ dependencies {
     implementation ("de.raphaelebner:roomdatabasebackup:1.0.0-beta13")
     implementation("cat.ereza:customactivityoncrash:2.4.0")
     implementation ("com.airbnb.android:lottie:6.1.0")
+    implementation ("net.zetetic:android-database-sqlcipher:4.5.4")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

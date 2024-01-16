@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
  * This class will have a mapping SQLite table in the database.
  *
  * For more documentation please see Android Developer website.
- * @author Ridh
  * @see Entity
  */
 @Entity

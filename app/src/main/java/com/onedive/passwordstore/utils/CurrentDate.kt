@@ -5,7 +5,6 @@ import java.util.Locale
 
 /**
  * This function is used to get the time based on the current locale
- * @author Ridh
  */
 fun getCurrentLocaleTime() : String{
 

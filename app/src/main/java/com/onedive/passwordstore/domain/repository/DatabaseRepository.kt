@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 /**
  * This interface is a method blueprint that will exist in any database in this application
  * @param E entity / data model that will be used by the database
- * @author Ridh
  */
 interface DatabaseRepository<E> {
 

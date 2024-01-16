@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityDetailBinding
-import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
 import com.onedive.passwordstore.utils.Const.EXTRA_DETAIL_KEY
@@ -18,7 +17,7 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
 
     private var id:Long = 0
 
-    private val viewModel: PasswordViewModel<DatabaseModelDTO> by viewModels {
+    private val viewModel: PasswordViewModel by viewModels {
         PasswordViewModelFactory(RoomDatabaseRepositoryImpl(roomDatabaseDao))
     }
 
@@ -51,16 +50,17 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun deviceSecurityIsAvailable() {
+    override fun confirmPasswordOrBiometricPasswordIsSuccessfully() {
         showData()
     }
 
-    override fun deviceSecurityIsNotAvailable() {
+    override fun noAvailablePasswordOrBiometricPasswordInThisDevice() {
         showData()
     }
 
 
 
+    //Check whether the database ID data sent previously exists, if there is then display the data details
     private fun showData(){
 
         if (intent.hasExtra(EXTRA_DETAIL_KEY)){
