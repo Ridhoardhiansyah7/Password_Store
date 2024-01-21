@@ -6,8 +6,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewbinding.ViewBinding;
 
-import com.onedive.passwordstore.data.dataSource.local.room.app.PasswordDatabase;
-import com.onedive.passwordstore.data.dataSource.local.room.dao.PasswordRoomDao;
+import com.onedive.passwordstore.data.local.room.app.PasswordDatabase;
+import com.onedive.passwordstore.data.local.room.dao.PasswordRoomDao;
 
 import kotlin.Deprecated;
 import kotlin.DeprecationLevel;

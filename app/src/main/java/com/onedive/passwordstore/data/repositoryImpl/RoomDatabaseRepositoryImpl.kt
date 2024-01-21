@@ -1,6 +1,6 @@
 package com.onedive.passwordstore.data.repositoryImpl
 
-import com.onedive.passwordstore.data.dataSource.local.room.dao.PasswordRoomDao
+import com.onedive.passwordstore.data.local.room.dao.PasswordRoomDao
 import com.onedive.passwordstore.data.mapper.toDatabaseModel
 import com.onedive.passwordstore.data.mapper.toDatabaseModelList
 import com.onedive.passwordstore.data.mapper.toPasswordRoomDatabaseEntity

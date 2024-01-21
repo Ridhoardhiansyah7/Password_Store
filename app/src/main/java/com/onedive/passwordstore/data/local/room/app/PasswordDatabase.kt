@@ -1,11 +1,11 @@
-package com.onedive.passwordstore.data.dataSource.local.room.app
+package com.onedive.passwordstore.data.local.room.app
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.onedive.passwordstore.data.dataSource.local.room.dao.PasswordRoomDao
-import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
+import com.onedive.passwordstore.data.local.room.dao.PasswordRoomDao
+import com.onedive.passwordstore.data.local.room.entity.PasswordRoomDatabaseEntity
 import com.onedive.passwordstore.utils.Const
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory

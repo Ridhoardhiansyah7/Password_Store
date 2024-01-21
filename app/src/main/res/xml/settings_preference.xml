@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory app:title="Security">
 
@@ -36,6 +37,11 @@
             app:summary="App version : 1.0"
             app:icon="@drawable/baseline_info_24"/>
 
+        <Preference
+            app:key="checkUpdate"
+            android:title="@string/update_preference_title"
+            app:summary="@string/update_preference_message"
+            app:icon="@drawable/baseline_system_update_24"/>
 
     </PreferenceCategory>
 

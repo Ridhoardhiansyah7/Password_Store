@@ -24,7 +24,10 @@
     <string name="backup_preference_summary">Klik untuk mencadangkan data </string>
 
     <string name="restore_preference_title">Kembalikan data</string>
-    <string name="restore_preference_summary">Klik untuk mengembalikan data, katasandi enkripsi diperlukan! </string>
+    <string name="restore_preference_summary">Klik untuk mengembalikan data, mungkin hanya file yang dihasilkan oleh aplikasi ini yang dapat digunakan. </string>
+
+    <string name="update_preference_title">Cek Pembaruan aplikasi</string>
+    <string name="update_preference_message">Klik untuk memeriksa apakah ada update</string>
 
     <!-- END XML CONSTANT VALUE -->
 
@@ -52,6 +55,8 @@
 
     <string name="err_no_file_selected">Tidak ada file yang dipilih operasi dibatalkan</string>
     <string name="err_back_button_pressed">Tombol kembali di klik, sedangkan file cadangan belum di simpan pada penyimpanan perangkat</string>
+
+    <string name="no_available_update">Tidak ada update yang tersedia</string>
     <!-- END ACTIVITY / FRAGMENT CONSTANT VALUE -->
 
 </resources>

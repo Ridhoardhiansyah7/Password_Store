@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 /**
  * This is a viewModel class that is used to manipulate data in any database
  *
- * // @param E  entity / data model that will be used by the database
  * @see DatabaseRepository
  */
 class PasswordViewModel(private val repository: DatabaseRepository<DatabaseModelDTO>) : ViewModel() {

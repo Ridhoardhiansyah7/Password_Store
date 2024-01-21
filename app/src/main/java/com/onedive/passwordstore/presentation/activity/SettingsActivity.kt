@@ -1,14 +1,18 @@
 package com.onedive.passwordstore.presentation.activity
 
+import android.app.DownloadManager
+import android.content.IntentFilter
 import android.os.Bundle
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.databinding.ActivitySettingsBinding
 import com.onedive.passwordstore.presentation.fragment.SettingsFragment
+import com.onedive.passwordstore.presentation.receiver.DownloadReceiver
 import de.raphaelebner.roomdatabasebackup.core.RoomBackup
 
 class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
 
     lateinit var roomBackup: RoomBackup
+    private lateinit var downloadReceiver : DownloadReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +27,14 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
         transition.replace(R.id.container_settings, SettingsFragment())
         transition.commit()
 
+        downloadReceiver = DownloadReceiver()
+        registerReceiver(downloadReceiver,IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(downloadReceiver)
     }
 
 }

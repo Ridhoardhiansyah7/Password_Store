@@ -10,6 +10,9 @@ public final class Const {
         System.loadLibrary("native-lib");
     }
 
+    // Base Url to check for updates
+    public static final String UPDATE_BASE_URL = "https://api.jsonbin.io/v3/";
+
     //NAVIGATION KEY DATA THAT CONTAINS VALUES SENT TO OTHER ACTIVITIES
 
     // MainActivity / ListByTagActivity -> DetailPasswordActivity
@@ -35,5 +38,18 @@ public final class Const {
      * @return default key in native c++
      */
     public static native String getNativeEncryptKey();
+
+    /**
+     *
+     * @return JSON BIN ID in native c++
+     */
+    public static native String getUpdateJsonBinId();
+
+    /**
+     *
+     * @return X-MASTER-KEY for JSON BIN in native c++
+     */
+
+    public static native String getApiSecretKey();
 
 }

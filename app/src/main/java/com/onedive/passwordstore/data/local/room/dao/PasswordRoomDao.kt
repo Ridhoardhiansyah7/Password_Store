@@ -1,9 +1,9 @@
-package com.onedive.passwordstore.data.dataSource.local.room.dao
+package com.onedive.passwordstore.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import com.onedive.passwordstore.data.dataSource.local.room.entity.PasswordRoomDatabaseEntity
+import com.onedive.passwordstore.data.local.room.entity.PasswordRoomDatabaseEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

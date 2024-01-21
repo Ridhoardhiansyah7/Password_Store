@@ -1,4 +1,4 @@
-package com.onedive.passwordstore.data.dataSource.local.room.entity
+package com.onedive.passwordstore.data.local.room.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
