@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.DownloadManager
 import android.app.KeyguardManager
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.onedive.passwordstore.BuildConfig
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.data.repositoryImpl.BackupRestoreRoomDatabaseImpl
 import com.onedive.passwordstore.data.repositoryImpl.UpdateRepositoryImpl
+import com.onedive.passwordstore.presentation.activity.AboutAppActivity
 import com.onedive.passwordstore.presentation.activity.SettingsActivity
 import com.onedive.passwordstore.presentation.viewmodel.BackupRestoreDataViewModel
 import com.onedive.passwordstore.presentation.viewmodel.UpdateViewModel
@@ -37,6 +39,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var fragmentActivity: SettingsActivity
     private lateinit var lockAppPreference: SwitchPreference
     private lateinit var updateAppPreference: Preference
+    private lateinit var aboutAppPreference: Preference
 
     private val backUpViewModel: BackupRestoreDataViewModel by viewModels {
         BackupRestoreDataViewModelFactory(
@@ -59,6 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         fragmentActivity = (activity as SettingsActivity)
         lockAppPreference = findPreference("lock")!!
         updateAppPreference = findPreference("checkUpdate")!!
+        aboutAppPreference = findPreference("about") !!
 
         val backupPreference: Preference = findPreference("backup")!!
         val restorePreference: Preference = findPreference("restore")!!
@@ -76,6 +80,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         updateAppPreference.setOnPreferenceClickListener {
             updateViewModel.checkAvailableUpdate()
+            true
+        }
+
+        aboutAppPreference.summary = "App Version : ${BuildConfig.VERSION_NAME} ${BuildConfig.BUILD_TYPE}"
+        aboutAppPreference.setOnPreferenceClickListener {
+            startActivity(Intent(requireContext(),AboutAppActivity::class.java))
             true
         }
 

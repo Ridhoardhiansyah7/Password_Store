@@ -9,9 +9,9 @@ import com.onedive.passwordstore.domain.model.UpdateModelDTO
 @Keep
 fun UpdateModel.toUpdateModelDto () : UpdateModelDTO {
     return UpdateModelDTO(
-        updateVersion = updateVersion ?: "Err",
-        updateTitle = updateTitle ?: " Err",
-        updateMessage = updateMessage ?: " Err",
-        updateApkUrl = updateApkUrl ?: " https://github.com"
+        updateVersion = updateVersion ,
+        updateTitle = updateTitle ,
+        updateMessage = updateMessage ,
+        updateApkUrl = updateApkUrl
     )
 }

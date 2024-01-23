@@ -9,8 +9,8 @@ import com.google.gson.annotations.SerializedName
  */
 @Keep
 data class UpdateModel(
-    @SerializedName("updateVersion") val updateVersion : String?,
-    @SerializedName("updateTitle") val updateTitle : String?,
-    @SerializedName("updateMessage") val updateMessage : String?,
-    @SerializedName("updateApkUrl") val updateApkUrl : String?
+    @SerializedName("updateVersion") val updateVersion : String,
+    @SerializedName("updateTitle") val updateTitle : String,
+    @SerializedName("updateMessage") val updateMessage : String,
+    @SerializedName("updateApkUrl") val updateApkUrl : String
 )
