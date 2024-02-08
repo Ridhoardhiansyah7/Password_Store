@@ -15,13 +15,16 @@ import androidx.core.view.GravityCompat
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityMainBinding
+import com.onedive.passwordstore.domain.model.DatabaseModelDTO
 import com.onedive.passwordstore.presentation.adapter.PasswordDataAdapter
 import com.onedive.passwordstore.presentation.adapter.PasswordDataTypeAdapter
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
+import com.onedive.passwordstore.utils.Const
 import com.onedive.passwordstore.utils.Const.EXTRA_DETAIL_KEY
 import com.onedive.passwordstore.utils.Const.EXTRA_EDIT
 import com.onedive.passwordstore.utils.Const.EXTRA_LIST_BY_TAG
+import com.onedive.passwordstore.utils.sharedPreference
 import com.onedive.passwordstore.utils.showDialog
 import com.onedive.passwordstore.utils.toAnotherActivity
 
@@ -39,6 +42,12 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMainBinding.inflate(layoutInflater))
         setSupportActionBar(binding.toolbar)
+
+        if (sharedPreference(this).getBoolean(Const.LOCK_APP_KEY_PREFERENCE,false)){
+            showConfirmDialogWithAvailablePasswordOrBiometricPassword()
+        } else {
+            noAvailablePasswordOrBiometricPasswordInThisDevice()
+        }
 
         binding.fabAdd.setOnClickListener {
             startActivity(Intent(this, AddPasswordActivity::class.java))
@@ -69,7 +78,6 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
     }
 
 
-    @SuppressLint("RestrictedApi")
     private fun setAdapterPasswordData() {
 
         viewModel.getAll().observe(this) { list ->
@@ -78,43 +86,9 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
                 context = this,
                 list = list,
                 onClick = { toDetailPassword(list[it].id!!) },
-                onLongClick = { position, view ->
-
-                    popupMenu = PopupMenu(this,view,GravityCompat.END)
-                    popupMenu.menuInflater.inflate(R.menu.edit_delete_menu,popupMenu.menu)
-                    popupMenu.setOnMenuItemClickListener {menuItem ->
-
-                        when(menuItem.itemId){
-                            R.id.action_edit -> { toEditActivity(list[position].id!!) }
-                            R.id.action_delete -> { deleteDataPassword(list[position].id!!) }
-                        }
-
-                        true
-                    }
-
-                    if (popupMenu.menu is MenuBuilder){
-                        val menuBuilder = popupMenu.menu as MenuBuilder
-                        menuBuilder.setOptionalIconsVisible(true)
-
-                        for (item in menuBuilder.visibleItems){
-
-                            val iconMarginPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,10.toFloat(),resources.displayMetrics).toInt()
-                            if (item.icon != null){
-
-                                item.icon = object : InsetDrawable(item.icon,iconMarginPx,0,iconMarginPx,0){
-
-                                    override fun getIntrinsicWidth(): Int {
-                                        return intrinsicHeight + iconMarginPx + iconMarginPx
-                                    }
-
-                                }
-
-                            }
-                        }
-                    }
-                    popupMenu.show()
-                }
+                onLongClick = { position, view -> initPopupMenu(view,list,position)}
             )
+
             binding.rvPassword.adapter = passwordDataAdapter
             if (passwordDataAdapter.itemCount == 0) {
                 binding.lottieParent.parent.visibility = View.VISIBLE
@@ -137,6 +111,47 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
             }
         }
 
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun initPopupMenu(parentView:View,dataList:List<DatabaseModelDTO>,position : Int) {
+
+        popupMenu = PopupMenu(this,parentView,GravityCompat.END)
+        popupMenu.menuInflater.inflate(R.menu.edit_delete_menu,popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener {menuItem ->
+
+            when(menuItem.itemId){
+                R.id.action_edit -> { toEditActivity(dataList[position].id!!) }
+                R.id.action_delete -> { deleteDataPassword(dataList[position].id!!) }
+            }
+
+            true
+        }
+
+        if (popupMenu.menu is MenuBuilder){
+            val menuBuilder = popupMenu.menu as MenuBuilder
+            menuBuilder.setOptionalIconsVisible(true)
+
+            for (item in menuBuilder.visibleItems){
+
+                val iconMarginPx = TypedValue
+                    .applyDimension(TypedValue.COMPLEX_UNIT_DIP,10.toFloat(),resources.displayMetrics)
+                    .toInt()
+
+                if (item.icon != null){
+
+                    item.icon = object : InsetDrawable(item.icon,iconMarginPx,0,iconMarginPx,0){
+
+                        override fun getIntrinsicWidth(): Int {
+                            return intrinsicHeight + iconMarginPx + iconMarginPx
+                        }
+
+                    }
+
+                }
+            }
+        }
+        popupMenu.show()
     }
 
     @SuppressLint("NotifyDataSetChanged")

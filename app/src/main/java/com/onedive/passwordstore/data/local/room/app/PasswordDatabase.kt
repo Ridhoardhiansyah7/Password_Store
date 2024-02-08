@@ -6,7 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.onedive.passwordstore.data.local.room.dao.PasswordRoomDao
 import com.onedive.passwordstore.data.local.room.entity.PasswordRoomDatabaseEntity
-import com.onedive.passwordstore.utils.Const
+import com.onedive.passwordstore.presentation.activity.ActivityInitEncryptDatabase
+import com.onedive.passwordstore.utils.encryptedSharedPreferences
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 
@@ -27,8 +28,12 @@ abstract class PasswordDatabase : RoomDatabase() {
         @JvmStatic
         fun getInstance(context: Context) : PasswordDatabase {
 
-            val passphrase = SQLiteDatabase.getBytes(Const.getNativeEncryptKey().toCharArray())
-            val supportFactory = SupportFactory(passphrase)
+            val passphrase = SQLiteDatabase.getBytes(
+                encryptedSharedPreferences(context)
+                    .getString(ActivityInitEncryptDatabase.passwordValuesPreference,"null")!!
+                    .toCharArray()
+            )
+            val supportFactory = SupportFactory(passphrase,null,false)
 
             return INSTANCE ?: synchronized(this){
 

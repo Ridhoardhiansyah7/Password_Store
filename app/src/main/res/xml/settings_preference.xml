@@ -11,6 +11,12 @@
             app:enabled="false"
             app:icon="@drawable/baseline_lock_24"/>
 
+        <SwitchPreference
+            app:key="lockDetail"
+            app:title="@string/lock_detail_preference_title"
+            app:summary="@string/lock_detail_preference_summary_not_enable"
+            android:enabled="false"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="Tools">
@@ -26,6 +32,12 @@
             app:title="@string/restore_preference_title"
             app:summary="@string/restore_preference_summary"
             app:icon="@drawable/baseline_restore_page_24"/>
+
+        <Preference
+            app:key="deleteAll"
+            app:title="@string/delete_preference_title"
+            app:summary="@string/delete_preference_summary"
+            android:icon="@drawable/baseline_delete_24"/>
 
     </PreferenceCategory>
 

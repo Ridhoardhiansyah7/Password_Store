@@ -44,4 +44,9 @@ interface DatabaseRepository<E> {
      */
     suspend fun deleteById(id: Long)
 
+    /**
+     * This function is used to : Delete all data in database
+     */
+    suspend fun deleteAllData()
+
 }

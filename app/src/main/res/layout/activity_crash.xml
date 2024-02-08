@@ -24,22 +24,32 @@
         android:layout_below="@id/lottie"
         android:maxLines="2"
         android:ellipsize="end"
-        android:layout_marginTop="10sp"
         android:id="@+id/lottie_message" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_below="@id/lottie_message"
         android:layout_centerHorizontal="true"
-        android:text="Show Error log"
-        android:id="@+id/btn_show_log"/>
+        android:text="Delete All Data In This Application"
+        android:id="@+id/btn_delete_all_data_in_app"/>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/btn_delete_all_data_in_app"
+        android:layout_centerHorizontal="true"
+        android:text="Show Error Detail Log"
+        android:id="@+id/btn_show_log"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_below="@id/btn_show_log"
         android:layout_centerHorizontal="true"
         android:text="Restart Application"

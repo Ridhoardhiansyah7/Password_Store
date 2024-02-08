@@ -36,4 +36,7 @@ interface PasswordRoomDao {
     @Query("DELETE FROM PasswordRoomDatabaseEntity WHERE id = :key")
     suspend fun delete(key:Long)
 
+    @Query("DELETE FROM PasswordRoomDatabaseEntity")
+    suspend fun deleteAllData()
+
 }

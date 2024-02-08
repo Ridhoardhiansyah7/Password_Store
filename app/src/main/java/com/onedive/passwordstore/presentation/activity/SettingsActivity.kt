@@ -2,6 +2,7 @@ package com.onedive.passwordstore.presentation.activity
 
 import android.app.DownloadManager
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.databinding.ActivitySettingsBinding
@@ -28,7 +29,16 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
         transition.commit()
 
         downloadReceiver = DownloadReceiver()
-        registerReceiver(downloadReceiver,IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            registerReceiver(downloadReceiver,IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+                RECEIVER_NOT_EXPORTED
+            )
+
+        } else {
+            registerReceiver(downloadReceiver,IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        }
+
 
     }
 

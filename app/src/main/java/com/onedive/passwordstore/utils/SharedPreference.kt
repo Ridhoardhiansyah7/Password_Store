@@ -22,9 +22,9 @@ internal fun sharedPreference(context:Context) : SharedPreferences {
 /**
  * This function is used to get encrypted preferences
  */
-@Suppress("UNUSED")
-internal fun getEncryptedSharedPreferences(context: Context) : SharedPreferences {
-    if (encryptedSharedPreferences == null){
+
+internal fun encryptedSharedPreferences(context: Context): SharedPreferences {
+    if (encryptedSharedPreferences == null) {
 
         val masterKey = MasterKey.Builder(context)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)

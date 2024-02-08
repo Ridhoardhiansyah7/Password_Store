@@ -39,7 +39,11 @@ class RoomDatabaseRepositoryImpl(private val passwordRoomDao: PasswordRoomDao) :
     }
 
     override suspend fun deleteById(id:Long) {
-        return passwordRoomDao.delete(id)
+        passwordRoomDao.delete(id)
+    }
+
+    override suspend fun deleteAllData() {
+        passwordRoomDao.deleteAllData()
     }
 
 }

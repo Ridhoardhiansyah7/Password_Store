@@ -31,4 +31,8 @@ class PasswordViewModel(private val repository: DatabaseRepository<DatabaseModel
         repository.deleteById(id)
     }
 
+    fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteAllData()
+    }
+
 }

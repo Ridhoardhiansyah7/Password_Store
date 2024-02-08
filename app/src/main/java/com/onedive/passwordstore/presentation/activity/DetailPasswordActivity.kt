@@ -9,8 +9,10 @@ import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.databinding.ActivityDetailBinding
 import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
+import com.onedive.passwordstore.utils.Const
 import com.onedive.passwordstore.utils.Const.EXTRA_DETAIL_KEY
 import com.onedive.passwordstore.utils.Const.EXTRA_EDIT
+import com.onedive.passwordstore.utils.sharedPreference
 import com.onedive.passwordstore.utils.toAnotherActivity
 
 class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
@@ -24,6 +26,12 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityDetailBinding.inflate(layoutInflater))
+
+        if (sharedPreference(this).getBoolean(Const.LOCK_DETAIL_KEY_PREFERENCE,false)){
+            showConfirmDialogWithAvailablePasswordOrBiometricPassword()
+        } else {
+            noAvailablePasswordOrBiometricPasswordInThisDevice()
+        }
 
         setSupportActionBar(binding.inc.toolbar)
         binding.inc.collapse.title = "Detail Password"

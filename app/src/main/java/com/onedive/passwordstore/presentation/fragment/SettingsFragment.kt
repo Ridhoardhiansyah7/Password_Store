@@ -19,12 +19,15 @@ import androidx.preference.SwitchPreference
 import com.onedive.passwordstore.BuildConfig
 import com.onedive.passwordstore.R
 import com.onedive.passwordstore.data.repositoryImpl.BackupRestoreRoomDatabaseImpl
+import com.onedive.passwordstore.data.repositoryImpl.RoomDatabaseRepositoryImpl
 import com.onedive.passwordstore.data.repositoryImpl.UpdateRepositoryImpl
 import com.onedive.passwordstore.presentation.activity.AboutAppActivity
 import com.onedive.passwordstore.presentation.activity.SettingsActivity
 import com.onedive.passwordstore.presentation.viewmodel.BackupRestoreDataViewModel
+import com.onedive.passwordstore.presentation.viewmodel.PasswordViewModel
 import com.onedive.passwordstore.presentation.viewmodel.UpdateViewModel
 import com.onedive.passwordstore.presentation.viewmodel.factory.BackupRestoreDataViewModelFactory
+import com.onedive.passwordstore.presentation.viewmodel.factory.PasswordViewModelFactory
 import com.onedive.passwordstore.presentation.viewmodel.factory.UpdateViewModelFactory
 import com.onedive.passwordstore.utils.Const
 import com.onedive.passwordstore.utils.sharedPreference
@@ -38,6 +41,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private lateinit var fragmentActivity: SettingsActivity
     private lateinit var lockAppPreference: SwitchPreference
+    private lateinit var lockDetailPreference : SwitchPreference
+    private lateinit var deleteAllDataPreference : Preference
     private lateinit var updateAppPreference: Preference
     private lateinit var aboutAppPreference: Preference
 
@@ -54,6 +59,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         UpdateViewModelFactory(UpdateRepositoryImpl())
     }
 
+    private val databaseViewModel : PasswordViewModel by viewModels {
+        PasswordViewModelFactory(RoomDatabaseRepositoryImpl(fragmentActivity.roomDatabaseDao))
+    }
+
 
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -61,6 +70,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         fragmentActivity = (activity as SettingsActivity)
         lockAppPreference = findPreference("lock")!!
+        lockDetailPreference = findPreference("lockDetail") !!
+        deleteAllDataPreference = findPreference("deleteAll") !!
         updateAppPreference = findPreference("checkUpdate")!!
         aboutAppPreference = findPreference("about") !!
 
@@ -78,12 +89,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
+        deleteAllDataPreference.setOnPreferenceClickListener {
+            showDeleteAllDataDialog()
+            true
+        }
+
         updateAppPreference.setOnPreferenceClickListener {
             updateViewModel.checkAvailableUpdate()
             true
         }
 
-        aboutAppPreference.summary = "App Version : ${BuildConfig.VERSION_NAME} ${BuildConfig.BUILD_TYPE}"
+        aboutAppPreference.summary = "App Version : ${BuildConfig.VERSION_NAME}"
         aboutAppPreference.setOnPreferenceClickListener {
             startActivity(Intent(requireContext(),AboutAppActivity::class.java))
             true
@@ -94,18 +110,29 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun checkDeviceSecurity() {
-        val keyguardManager =
-            requireActivity().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+
+        val keyguardManager = requireActivity().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
         if (keyguardManager.isKeyguardSecure) {
 
             lockAppPreference.isEnabled = true
             lockAppPreference.summary = getString(R.string.lock_preference_summary)
 
-            lockAppPreference.setOnPreferenceChangeListener { _, newValue ->
-                sharedPreference(requireContext())
-                    .edit()
+            lockDetailPreference.isEnabled = true
+            lockDetailPreference.summary = getString(R.string.lock_detail_preference_summary)
+
+            val lockShared = sharedPreference(requireContext()).edit()
+
+            lockAppPreference.setOnPreferenceChangeListener { _, newValue  ->
+                lockShared
                     .putBoolean(Const.LOCK_APP_KEY_PREFERENCE, newValue as Boolean)
+                    .apply()
+                true
+            }
+
+            lockDetailPreference.setOnPreferenceChangeListener { _,newValue ->
+                lockShared
+                    .putBoolean(Const.LOCK_DETAIL_KEY_PREFERENCE,newValue as Boolean)
                     .apply()
                 true
             }
@@ -201,6 +228,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
             positiveBtnText = getString(R.string.restore_data_message_title_dialog),
             negativeBtnText = getString(R.string.confirm_close),
             positiveBtnClick = { backUpViewModel.restoreData() },
+            neutralBtnClick = null
+        )
+    }
+
+    private fun showDeleteAllDataDialog() {
+        showDialog(
+            context = requireContext(),
+            title = getString(R.string.delete_data_message_title_dialog),
+            message = getString(R.string.delete_data_message_summary_dialog),
+            positiveBtnText = getString(R.string.confirm_ok),
+            negativeBtnText = getString(R.string.confirm_close),
+            positiveBtnClick = { databaseViewModel.deleteAll() },
             neutralBtnClick = null
         )
     }

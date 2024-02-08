@@ -1,9 +1,10 @@
 package com.onedive.passwordstore.presentation.activity
 
-import android.annotation.SuppressLint
+import android.app.KeyguardManager
+import android.content.Context
 import android.os.Build
-import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
@@ -12,14 +13,13 @@ import androidx.biometric.BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.viewbinding.ViewBinding
 import com.onedive.passwordstore.R
-import com.onedive.passwordstore.utils.Const
-import com.onedive.passwordstore.utils.sharedPreference
 import com.onedive.passwordstore.utils.showToast
 
 /**
  * This class is an abstract class that is used to request a password/biometric when an activity is
  * running
  * @see BaseActivity
+ * @see KeyguardManager
  * @see BiometricPrompt
  * @see PromptInfo
  * @param B View Binding to use
@@ -29,38 +29,46 @@ abstract class BaseSecurityActivity<B : ViewBinding> : BaseActivity<B>() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var biometricPromptBuilder: PromptInfo
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        //Check whether the app lock setting is on
-        if (sharedPreference(this).getBoolean(Const.LOCK_APP_KEY_PREFERENCE,false)) {
-            showConfirmDialogWithBiometricPassword()
+    @Suppress("DEPRECATION")
+    protected fun showConfirmDialogWithAvailablePasswordOrBiometricPassword() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+
+            biometricPromptBuilder = PromptInfo.Builder().apply {
+                setTitle(getString(R.string.app_name))
+                setDescription(getString(R.string.enter_device_password_desc))
+                setConfirmationRequired(false)
+                setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+            }.build()
+
+            biometricPrompt = BiometricPrompt(this, authCallback)
+            biometricPrompt.authenticate(biometricPromptBuilder)
+
         } else {
-            noAvailablePasswordOrBiometricPasswordInThisDevice()
+
+            val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            val intent = keyguardManager.createConfirmDeviceCredentialIntent(
+                getString(R.string.app_name),
+                getString(R.string.enter_device_password_desc)
+            )
+
+            val resultLauncher = registerForActivityResult(ActivityResultContracts
+                .StartActivityForResult()) {
+
+                if (it.resultCode == RESULT_OK) {
+                    confirmPasswordOrBiometricPasswordIsSuccessfully()
+                } else {
+                    // If the back button is pressed or another action occurs that "Keyguard"
+                    // fails to execute, complete the activity
+                    finish()
+                }
+
+            }
+            resultLauncher.launch(intent)
+
         }
 
-    }
-
-    @SuppressLint("SwitchIntDef")
-    @Suppress("DEPRECATION")
-    // Show password/biometric confirmation request dialog
-    private fun showConfirmDialogWithBiometricPassword() {
-
-        biometricPromptBuilder = PromptInfo.Builder().apply {
-            val auth = BIOMETRIC_STRONG or DEVICE_CREDENTIAL
-
-            setTitle(getString(R.string.app_name))
-            setDescription(getString(R.string.enter_device_password_desc))
-            setConfirmationRequired(false)
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) setDeviceCredentialAllowed(true)
-            else setAllowedAuthenticators(auth)
-
-
-
-        }.build()
-
-        biometricPrompt = BiometricPrompt(this,authCallback)
-        biometricPrompt.authenticate(biometricPromptBuilder)
     }
 
     // Biometric callback
@@ -79,9 +87,9 @@ abstract class BaseSecurityActivity<B : ViewBinding> : BaseActivity<B>() {
                 showToast(
                     context = applicationContext,
                     message = "error with code $errorCode${
-                        if (errString.isNotEmpty()) " with message $errString"  
+                        if (errString.isNotEmpty()) " with message $errString"
                         else ""
-                    }" ,
+                    }",
                     duration = Toast.LENGTH_SHORT
                 )
                 finish()

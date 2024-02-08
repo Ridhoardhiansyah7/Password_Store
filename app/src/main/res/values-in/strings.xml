@@ -16,15 +16,24 @@
     <string name="save_menu">Simpan</string>
     <string name="edit_menu">Sunting</string>
 
+    <string name="init_encrypt_txt">Masukan Katasandi yang akan digunakan untuk mengenkripsi atau mengamankan data password anda, password ini juga akan digunakan untuk mengembalikan data anda jika sebelumnya anda telah mencadangkannya dengan syarat bahwa password database tsb sama dengan yang akan anda setel saat ini</string>
+
     <string name="lock_preference_title">Kunci Aplikasi</string>
-    <string name="lock_preference_summary">Minta kata sandi saat aplikasi dibuka, dan melihat detail password</string>
+    <string name="lock_preference_summary">Minta kata sandi saat aplikasi dibuka</string>
     <string name="lock_preference_summary_not_enable">Tidak dapat diaktifkan karena perangkat tidak diberi katasandi / katasandi biometrik</string>
+
+    <string name="lock_detail_preference_title">Kunci Detail Password</string>
+    <string name="lock_detail_preference_summary">Minta kata sandi saat meilihat detail password</string>
+    <string name="lock_detail_preference_summary_not_enable">Tidak dapat diaktifkan karena perangkat tidak diberi katasandi / katasandi biometrik</string>
 
     <string name="backup_preference_title">Cadangkan data</string>
     <string name="backup_preference_summary">Klik untuk mencadangkan data </string>
 
     <string name="restore_preference_title">Kembalikan data</string>
     <string name="restore_preference_summary">Klik untuk mengembalikan data, mungkin hanya file yang dihasilkan oleh aplikasi ini yang dapat digunakan. </string>
+
+    <string name="delete_preference_title">Hapus</string>
+    <string name="delete_preference_summary">Klik untuk menghapus semua data yang ada pada database saat ini.</string>
 
     <string name="update_preference_title">Cek Pembaruan aplikasi</string>
     <string name="update_preference_message">Klik untuk memeriksa apakah ada update</string>
@@ -38,7 +47,7 @@
     <string name="confirm_ok">Oke</string>
     <string name="confirm_close">Tutup</string>
     <string name="delete_data_message_title_dialog">Hapus</string>
-    <string name="delete_data_message_summary_dialog">Apakah anda yakin menghapus data ini ?</string>
+    <string name="delete_data_message_summary_dialog">Apakah anda yakin menghapus data ?</string>
 
     <string name="input_pass_not_equals">Katasandi dan konfirmasi katasandi nilai nya tidak sama!</string>
     <string name="input_cannot_empty">Beberapa formulir tidak boleh kosong!</string>
