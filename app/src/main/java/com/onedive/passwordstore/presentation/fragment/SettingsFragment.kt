@@ -152,7 +152,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     message = update.updateMessage,
                     positiveBtnText = "Update",
                     negativeBtnText = "Close",
-                    positiveBtnClick = { showPermissionDialog(update.updateApkUrl) },
+                    positiveBtnClick = {
+                        if (update.updateVersion != "Unknown"){
+                            showPermissionDialogThenDownloadNewestVersion(update.updateApkUrl)
+                        } else {
+                            showToast(
+                                context = requireContext(),
+                                message = "Unable to download please check your internet connection",
+                                duration = Toast.LENGTH_SHORT
+                            )
+                        }
+                    },
                     neutralBtnClick = null
                 )
             } else {
@@ -166,7 +176,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun showPermissionDialog(url : String){
+    private fun showPermissionDialogThenDownloadNewestVersion(url : String){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
 

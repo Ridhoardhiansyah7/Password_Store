@@ -30,7 +30,7 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
         if (sharedPreference(this).getBoolean(Const.LOCK_DETAIL_KEY_PREFERENCE,false)){
             showConfirmDialogWithAvailablePasswordOrBiometricPassword()
         } else {
-            noAvailablePasswordOrBiometricPasswordInThisDevice()
+            confirmPasswordOrBiometricPasswordIsSuccessfully()
         }
 
         setSupportActionBar(binding.inc.toolbar)
@@ -61,11 +61,6 @@ class DetailPasswordActivity : BaseSecurityActivity<ActivityDetailBinding>() {
     override fun confirmPasswordOrBiometricPasswordIsSuccessfully() {
         showData()
     }
-
-    override fun noAvailablePasswordOrBiometricPasswordInThisDevice() {
-        showData()
-    }
-
 
 
     //Check whether the database ID data sent previously exists, if there is then display the data details

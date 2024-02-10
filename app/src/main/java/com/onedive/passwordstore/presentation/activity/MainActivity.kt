@@ -46,7 +46,7 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         if (sharedPreference(this).getBoolean(Const.LOCK_APP_KEY_PREFERENCE,false)){
             showConfirmDialogWithAvailablePasswordOrBiometricPassword()
         } else {
-            noAvailablePasswordOrBiometricPasswordInThisDevice()
+            confirmPasswordOrBiometricPasswordIsSuccessfully()
         }
 
         binding.fabAdd.setOnClickListener {
@@ -71,12 +71,6 @@ class MainActivity : BaseSecurityActivity<ActivityMainBinding>() {
         setAdapterPasswordData()
         setAdapterDistrictTypeData()
     }
-
-    override fun noAvailablePasswordOrBiometricPasswordInThisDevice() {
-        setAdapterPasswordData()
-        setAdapterDistrictTypeData()
-    }
-
 
     private fun setAdapterPasswordData() {
 

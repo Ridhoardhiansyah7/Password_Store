@@ -120,13 +120,6 @@ abstract class BaseSecurityActivity<B : ViewBinding> : BaseActivity<B>() {
      * This function is performed when the user's confirmation with password / biometric
      * has been successful and if this device not available password
      */
-    abstract fun confirmPasswordOrBiometricPasswordIsSuccessfully()
-
-    /**
-     * This function is performed when checking has been completed but the device
-     * does not have an active password / biometric
-     */
-    abstract fun noAvailablePasswordOrBiometricPasswordInThisDevice()
+    protected abstract fun confirmPasswordOrBiometricPasswordIsSuccessfully()
 
 }
-
