@@ -34,6 +34,8 @@ class SettingsActivity : BaseSecurityActivity<ActivitySettingsBinding>() {
             confirmPasswordOrBiometricPasswordIsSuccessfully()
         }  else if (sharedPreference(this).getBoolean(Const.LOCK_DETAIL_KEY_PREFERENCE,false)){
             showConfirmDialogWithAvailablePasswordOrBiometricPassword()
+        } else {
+           confirmPasswordOrBiometricPasswordIsSuccessfully()
         }
 
         binding.inc.collapse.title = getString(R.string.setting)
